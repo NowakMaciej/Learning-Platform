@@ -1,0 +1,45 @@
+table {
+	border-collapse: collapse;
+}
+
+th, td {
+	border: 1px solid black;
+	padding: 10px 15px;
+	max-width: 500px;
+}
+
+.error {
+	color: red;
+	font-weight: bold;
+	border: 1px solid red;
+}
+
+div {
+	font-weight: bold;
+}
+
+.prime {
+	font-weight: bold;
+	font-size: 20px;
+}
+
+.login {
+	font-weight: bold;
+}
+
+.read {
+	font-weight: normal;
+}
+
+.readNot {
+	font-weight: bold;
+	background-color: grey;
+}
+
+.hide {
+	display: none;
+}
+
+.show {
+	display: block;
+}
