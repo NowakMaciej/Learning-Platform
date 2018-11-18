@@ -17,7 +17,7 @@
 		<a href="${pageContext.request.contextPath}/user/logout">Logout</a>
 	</button>
 	<button>
-		<a href="${pageContext.request.contextPath}/user/edit">Edit
+		<a href="${pageContext.request.contextPath}/user/edit/${ student.user.id }">Edit
 			profile</a>
 	</button>
 	<button>
@@ -35,7 +35,7 @@
 				TEACHER USER ID: ${ student.teacher.user.id }
 			</td>
 			<td><a
-				href="${pageContext.request.contextPath}/user/${student.teacher.user.id}">
+				href="${pageContext.request.contextPath}/user/message/${student.teacher.user.id}">
 					${ student.teacher.user.firstname } ${ student.teacher.user.surname }</a></td>
 		</tr>
 	</table>

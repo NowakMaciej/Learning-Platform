@@ -11,9 +11,11 @@ import org.springframework.stereotype.Service;
 
 import platform.dto.ExamDto;
 import platform.dto.ExerciseDto;
+import platform.dto.StudentExamDto;
 import platform.dto.TeacherDto;
 import platform.entity.Exam;
 import platform.entity.Exercise;
+import platform.entity.StudentExam;
 import platform.repository.ExamRepository;
 import platform.repository.TeacherRepository;
 
@@ -32,7 +34,19 @@ public class ExamService {
 		this.teacherRepository = teacherRepository;
 		this.userService = userService;
 	}
-
+	
+//	public StudentExam createStudentExamFromDto (ExamDto examDto) {
+//		StudentExam studentExam = new StudentExam();
+//		if (!examDto.getStudentExamDtos().isEmpty()) {
+//			studentExam.setStudent(examDto.getStudentExamDtos());
+//		return studentExam;
+//	}
+//	
+//	public StudentExamDto getDtoFromStudentExam (Exam exam) {
+//		StudentExamDto studentExamDto = new StudentExamDto();
+//		return studentExamDto;
+//	}
+	
 	public Exam createExamFromDto(ExamDto examDto) {
 		Exam exam = new Exam();
 		if (examDto.getId() != null) {
@@ -44,6 +58,9 @@ public class ExamService {
 			exam.setStudents(examDto.getStudentDtos().stream()
 					.map(userService::createSimpleStudentFromDto).collect(Collectors.toList()));
 		}		
+//		if (!examDto.getStudentExamDtos().isEmpty()) {
+//			exam.setStudents(examDto.getStudentExamDtos().stream().map(this::createStudentExamFromDto).collect(Collectors.toList()));
+//		}
 		exam.setDifficultyLevel(examDto.getDifficultyLevel());
 		exam.setCreated(LocalDateTime.now());
 		exam.setUpdated(exam.getCreated());
@@ -67,7 +84,7 @@ public class ExamService {
 
 	public ExamDto getDtoFromExam(Exam exam) {
 		ExamDto examDto = getSimpleDtoFromExam(exam);
-		examDto.setTeacherDto(userService.getDtoFromTeacher(exam.getTeacher()));
+		examDto.setTeacherDto(userService.getSimpleDtoFromTeacher(exam.getTeacher()));
 		if (!exam.getStudents().isEmpty()) {
 			examDto.setStudentDtos(exam.getStudents()
 					.stream()

@@ -35,26 +35,18 @@ public class UserServiceImpl {
 	}
 
 	public UserDto register(UserDto userDto) {
-//	public void register(UserDto userDto) {
-//		User user = userRepository.save(createUserFromDto(userDto));
-//		userRepository.save(createUserFromDto(userDto));
 		if (userDto.getRole().equals("student")) {
+			System.out.println(userDto);
 			studentRepository.save(createStudentFromDto(userDto));
-
 		}
-		if (userDto.getRole().equals("teacher")) {
+		else if (userDto.getRole().equals("teacher")) {
 			teacherRepository.save(createTeacherFromDto(userDto));
+		}
+		else {
+			userRepository.save(createUserFromDto(userDto));
 		}
 		return userDto;
 	}
-
-//	public Boolean login(UserDto userDto) {	
-//		User user = userRepository.findUserByEmail(userDto.getEmail());
-//		if (Objects.isNull(user)) {
-//			return false;
-//		}
-//		return BCrypt.checkpw(userDto.getPassword(), user.getPassword());
-//	}
 
 	public UserDto login (UserDto userDto) {
 		if (Objects.nonNull(userRepository.findUserByEmail(userDto.getEmail()))){
@@ -66,6 +58,12 @@ public class UserServiceImpl {
 		}
 		return null;
 	}
+	
+	public void changeActive (Long id) {
+		User user = userRepository.findOne(id);
+		user.setActive(!user.getActive());
+		userRepository.save(user);
+	}
 
 	public User createUserFromDto(UserDto userDto) {
 		User user = new User();
@@ -76,30 +74,29 @@ public class UserServiceImpl {
 		user.setSurname(userDto.getSurname());
 		user.setPassword(BCrypt.hashpw(userDto.getPassword(), BCrypt.gensalt()));
 		user.setEmail(userDto.getEmail());
-		user.setActive(true);
-		user.setRole(userDto.getRole());
+		if (Objects.isNull(userDto.getActive())) {
+			user.setActive(false);
+		}
+		if (Objects.nonNull(userDto.getRole())) {
+			user.setRole(userDto.getRole());
+		}
 		return user;
+	}
+	
+	public Teacher createTeacherFromDto(UserDto userDto) {
+		Teacher teacher = new Teacher();
+		teacher.setUser(createUserFromDto(userDto));
+		return teacher;
 	}
 
 	public Student createStudentFromDto(UserDto userDto) {
 		Student student = new Student();
 		student.setUser(createUserFromDto(userDto));
-		student.setDifficultyLevel(userDto.getDifficultyLevel());
+		if (Objects.nonNull(userDto.getDifficultyLevel())) {
+			student.setDifficultyLevel(userDto.getDifficultyLevel());
+		}
 		if (Objects.nonNull(userDto.getTeacher())) {
 			student.setTeacher(teacherRepository.findOne(userDto.getTeacher().getId()));
-		}
-		return student;
-	}
-	
-	public Student createStudentFromDto(StudentDto studentDto) {
-		System.out.println("STUDENT ID INFO POWER:" + studentDto.getTeacher().getId());
-		Student student = new Student();
-		student.setUser(createUserFromDto(studentDto.getUser()));
-		student.setDifficultyLevel(studentDto.getUser().getDifficultyLevel());
-		if (Objects.nonNull(studentDto.getUser().getTeacher())) {
-//			student.setTeacher(teacherRepository.findOne(studentDto.getUser().getTeacher().getId()));
-//			student.setTeacher(teacherRepository.findOne(studentDto.getTeacher().getUser().getId()));
-			student.setTeacher(teacherRepository.findOne(studentDto.getTeacher().getId()));
 		}
 		return student;
 	}
@@ -107,26 +104,8 @@ public class UserServiceImpl {
 	public Student createSimpleStudentFromDto(StudentDto studentDto) {
 		Student student = new Student();
 		student.setId(studentDto.getId());
-//		student.setUser(createUserFromDto(studentDto.getUser()));
-		student.setDifficultyLevel(studentDto.getUser().getDifficultyLevel());
-//		if (Objects.nonNull(studentDto.getUser().getTeacher())) {
-//			student.setTeacher(teacherRepository.findOne(studentDto.getUser().getTeacher().getId()));
-//			student.setTeacher(teacherRepository.findOne(studentDto.getTeacher().getUser().getId()));
-//			student.setTeacher(teacherRepository.findOne(studentDto.getTeacher().getId()));
-//		}
 		return student;
 	}
-
-	public Teacher createTeacherFromDto(UserDto userDto) {
-		Teacher teacher = new Teacher();
-		teacher.setUser(createUserFromDto(userDto));
-		return teacher;
-	}
-
-//	public Teacher createSimpleTeacherFromDto(UserDto userDto) {
-//		Teacher teacher = new Teacher();
-////		teacher.setUser(crea
-//	}
 
 	public UserDto getDtoFromUser(User user) {
 		UserDto userDto = new UserDto();
@@ -144,18 +123,18 @@ public class UserServiceImpl {
 		StudentDto studentDto = new StudentDto();
 		studentDto.setId(student.getId());
 		studentDto.setUser(getDtoFromUser(student.getUser()));
-		studentDto.setDifficultyLevel(student.getDifficultyLevel());
+		if (Objects.nonNull(student.getDifficultyLevel())) {
+			studentDto.setDifficultyLevel(student.getDifficultyLevel());
+		}
 		return studentDto;
 	}
 
 	public StudentDto getDtoFromStudent(Student student) {
-		StudentDto studentDto = new StudentDto();
-		studentDto.setId(student.getId());
-		studentDto.setUser(getDtoFromUser(student.getUser()));
-		studentDto.setDifficultyLevel(student.getDifficultyLevel());
-		studentDto.setTeacher(getSimpleDtoFromTeacher(student.getTeacher()));
+		StudentDto studentDto = getSimpleDtoFromStudent(student);
+		if(Objects.nonNull(student.getTeacher())) {
+			studentDto.setTeacher(getSimpleDtoFromTeacher(student.getTeacher()));
+		}
 		return studentDto;
-
 	}
 
 	public TeacherDto getSimpleDtoFromTeacher(Teacher teacher) {
@@ -166,23 +145,24 @@ public class UserServiceImpl {
 	}
 
 	public TeacherDto getDtoFromTeacher(Teacher teacher) {
-		TeacherDto teacherDto = new TeacherDto();
-		teacherDto.setId(teacher.getId());
-		teacherDto.setUser(getDtoFromUser(teacher.getUser()));
+		TeacherDto teacherDto = getSimpleDtoFromTeacher(teacher);
 		if (!teacher.getStudents().isEmpty()) {
 			teacherDto.setStudents(
-					teacher.getStudents().stream().map(this::getSimpleDtoFromStudent).collect(Collectors.toList()));
+					teacher.getStudents()
+					.stream()
+					.map(this::getSimpleDtoFromStudent)
+					.collect(Collectors.toList()));
 		}
 		return teacherDto;
 	}
-
-	public UserDto updateUser(UserDto userDto) {
+	
+	public User updateUser(UserDto userDto) {
 		User user = userRepository.getOne(userDto.getId());
 		user.setFirstname(userDto.getFirstname());
 		user.setSurname(userDto.getSurname());
 		user.setPassword(BCrypt.hashpw(userDto.getPassword(), BCrypt.gensalt()));
 		user.setEmail(userDto.getEmail());
-		return getDtoFromUser(user);
+		return user;
 	}
 
 	public TeacherDto updateTeacher(TeacherDto teacherDto) {
@@ -194,9 +174,13 @@ public class UserServiceImpl {
 
 	public StudentDto updateStudent(StudentDto studentDto) {
 		Student studentForUpdate = studentRepository.getOne(studentDto.getId());
-		studentForUpdate.setUser(createUserFromDto(studentDto.getUser()));
-		studentForUpdate.setDifficultyLevel(studentDto.getDifficultyLevel());
-		studentForUpdate.setTeacher(teacherRepository.getOne(studentDto.getTeacher().getId()));
+		studentForUpdate.setUser(updateUser(studentDto.getUser()));
+		if (Objects.nonNull(studentDto.getDifficultyLevel())){
+			studentForUpdate.setDifficultyLevel(studentDto.getDifficultyLevel());
+		}
+		if (Objects.nonNull(studentDto.getTeacher())){
+			studentForUpdate.setTeacher(teacherRepository.getOne(studentDto.getTeacher().getId()));
+		}
 		studentRepository.save(studentForUpdate);
 		return getDtoFromStudent(studentForUpdate);
 	}
@@ -208,39 +192,49 @@ public class UserServiceImpl {
 	public UserDto findUserByEmail(String email) {
 		return getDtoFromUser(userRepository.findUserByEmail(email));
 	}
-
-	public List<TeacherDto> findTeachers() {
-		return teacherRepository.findAll()
-				.stream()
-				.map(this::getSimpleDtoFromTeacher)
-				.collect(Collectors.toList());
-	}
-
-	public List<StudentDto> findAllStudentsByTeacherId(Long id) {
-		return teacherRepository.findTeacherByUserId(id).getStudents()
-				.stream()
-				.map(this::getDtoFromStudent)
-				.collect(Collectors.toList());
-	}
-
-	public TeacherDto findTeacherByUserId(Long id) {
-		return getDtoFromTeacher(teacherRepository.findTeacherByUserId(id));
+	
+	public StudentDto findStudentById(Long id) {
+		return getDtoFromStudent(studentRepository.getOne(id));
 	}
 
 	public StudentDto findStudentByUserId(Long id) {
 		return getDtoFromStudent(studentRepository.findStudentByUserId(id));
 	}
 	
-	public StudentDto findStudentById(Long id) {
-		return getDtoFromStudent(studentRepository.getOne(id));
-	}
-	
 	public TeacherDto findTeacherById(Long id) {
 		return getDtoFromTeacher(teacherRepository.getOne(id));
 	}
+	
+	public TeacherDto findTeacherByUserId(Long id) {
+		return getDtoFromTeacher(teacherRepository.findTeacherByUserId(id));
+	}
+	
+	public List<StudentDto> findAllUnassignedStudents() {
+		return studentRepository.findAllUnassignedStudents()
+			.stream()
+			.map(this::getDtoFromStudent)
+			.collect(Collectors.toList());
+	}
 
-	public List<UserDto> findAllUsers() {
-		return userRepository.findAll().stream().map(this::getDtoFromUser).collect(Collectors.toList());
+	public List<TeacherDto> findAllTeachers() {
+		return teacherRepository.findAll()
+				.stream()
+				.map(this::getDtoFromTeacher)
+				.collect(Collectors.toList());
+	}
+	
+	public List<StudentDto> findAllStudents() {
+		return studentRepository.findAll()
+				.stream()
+				.map(this::getDtoFromStudent)
+				.collect(Collectors.toList());
+	}
+	
+	public List<StudentDto> findAllStudentsByTeacherId(Long id) {
+		return studentRepository.findAllStudentsByTeacherId(id)
+				.stream()
+				.map(this::getDtoFromStudent)
+				.collect(Collectors.toList());
 	}
 
 	public void deleteUser(Long id) {

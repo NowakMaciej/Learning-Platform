@@ -8,12 +8,10 @@
 <link type="text/css" href="${pageContext.request.contextPath}/resources/css/style.css" rel="stylesheet">
 </head>
 <body>
-	<p class="prime">Edit user</p>
 	<button>
-		<a href="${pageContext.request.contextPath}/user/${ user.role }/">Abort</a>
+		<a href="${pageContext.request.contextPath}/user/admin/">Abort</a>
 	</button>
-	<form:form method="post" modelAttribute="userDto" action="${pageContext.request.contextPath}/user/edit/user">
-		<form:hidden path="id" value="${ user.id }"/>
+	<form:form method="post" modelAttribute="userDto">
 		Firstname:<form:input path="firstname"/>
 		<form:errors path="firstname" cssClass="error"/><br>
 		Surname:<form:input path="surname"/>
@@ -22,6 +20,7 @@
 		<form:errors path="email" cssClass="error"/><br>
 		Password:<form:input path="password"/>
 		<form:errors path="password" cssClass="error"/><br>
+		<form:hidden path="role" value="teacher"/>
 		<input type="submit" value="Submit"/>
 	</form:form>
 </body>

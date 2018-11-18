@@ -17,7 +17,7 @@
 		<a href="${pageContext.request.contextPath}/user/logout">Logout</a>
 	</button>
 	<button>
-		<a href="${pageContext.request.contextPath}/user/edit">Edit
+		<a href="${pageContext.request.contextPath}/user/edit/${ teacher.user.id }">Edit
 			profile</a>
 	</button>
 	<button>
@@ -51,7 +51,7 @@
 			<tr>
 				<td>${ student.id }</td>
 				<td><a
-					href="${pageContext.request.contextPath}/user/${student.user.id}">
+					href="${pageContext.request.contextPath}/user/message/${student.user.id}">
 						${ student.user.firstname } ${ student.user.surname }</a></td>
 				<td>${ student.difficultyLevel }</td>
 			</tr>

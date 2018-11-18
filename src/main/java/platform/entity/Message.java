@@ -20,10 +20,6 @@ public class Message {
 	private String text;
 	private Boolean isRead;
 	@ManyToOne (cascade = CascadeType.ALL)
-	private Teacher teacher;
-	@ManyToOne (cascade = CascadeType.ALL)
-	private Student student;
-	@ManyToOne (cascade = CascadeType.ALL)
 	private User sender;
 	@ManyToOne (cascade = CascadeType.ALL)
 	private User receiver;

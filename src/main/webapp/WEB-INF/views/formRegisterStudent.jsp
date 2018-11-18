@@ -20,12 +20,15 @@
 		<form:errors path="email" cssClass="error"/><br>
 		Password:<form:input path="password"/>
 		<form:errors path="password" cssClass="error"/><br>
+		<form:hidden path="role" value="student"/> 
+		<!--
 		Role:<br>
 		<form:select path="role" items="${roles}" itemValue="userRole" itemLabel="userRole"/><br>
-		Teacher:<br>
+		  Teacher:<br>
 		<form:select path="teacher.id" items="${teachers}" itemValue="id" itemLabel="name"/><br>
 		Difficulty level:
 		<form:select path="difficultyLevel" items="${ difficultyLevels }" itemValue="description" itemLabel="description"/><br>
+		-->
 		<input type="submit" value="Submit"/>
 	</form:form>
 </body>

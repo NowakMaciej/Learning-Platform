@@ -12,6 +12,7 @@ public class ExamDto {
 	private String title;
 	private TeacherDto teacherDto;
 	private List<StudentDto> studentDtos;
+//	private List<StudentExamDto> studentExamDtos;
 	private DifficultyLevel difficultyLevel;
 	private LocalDateTime created;
 	private LocalDateTime updated;

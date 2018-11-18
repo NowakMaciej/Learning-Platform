@@ -8,11 +8,14 @@
 <link type="text/css" href="${pageContext.request.contextPath}/resources/css/style.css" rel="stylesheet">
 </head>
 <body>
+	<p class="prime">Edit teacher</p>
 	<button>
-		<a href="${pageContext.request.contextPath}/user/${ teacher.user.role }/">Abort</a>
+		<a href="${pageContext.request.contextPath}/user/admin/">Abort</a>
 	</button>
 	<form:form method="post" modelAttribute="teacherDto" action="${pageContext.request.contextPath}/user/edit/teacher">
 		<form:hidden path="user.id" value="${ teacher.user.id }"/>
+		<form:hidden path="id" value="${ teacher.id }"/>
+		<form:hidden path="user.role" value="${ teacher.user.role }"/>
 		Firstname:<form:input path="user.firstname"/>
 		<form:errors path="user.firstname" cssClass="error"/><br>
 		Surname:<form:input path="user.surname"/>
@@ -21,8 +24,6 @@
 		<form:errors path="user.email" cssClass="error"/><br>
 		Password:<form:input path="user.password"/>
 		<form:errors path="user.password" cssClass="error"/><br>
-		<form:hidden path="user.role" value="${ teacher.user.role }"/>
-		<form:hidden path="id" value="${ teacher.id }"/>
 		<input type="submit" value="Submit"/>
 	</form:form>
 </body>

@@ -18,8 +18,10 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import platform.dto.CategoryDto;
 import platform.dto.ExamDto;
 import platform.dto.ExerciseDto;
+import platform.dto.StudentExamDto;
 import platform.dto.TeacherDto;
 import platform.dto.UserDto;
+import platform.entity.StudentExam;
 import platform.service.CategoryService;
 import platform.service.ExamService;
 import platform.service.ExerciseService;
@@ -71,7 +73,7 @@ public class ExamController {
 			model.addAttribute("examDto", new ExamDto());
 			model.addAttribute("categories", categoryService.findAllCategoriesByTeacher(teacher.getId()));
 			model.addAttribute("exercises", exerciseService.findAllExercisesByTeacher(teacher.getId()));
-			model.addAttribute("students", userService.findAllStudentsByTeacherId(teacher.getUser().getId()));
+			model.addAttribute("students", userService.findAllStudentsByTeacherId(teacher.getId()));
 			return "pageExam2";
 		}
 		return "redirect:/";
@@ -94,7 +96,7 @@ public class ExamController {
 		if (isLoggedIn) {
 			ExamDto examDto = examService.findExamById(id);
 			model.addAttribute("examDto", examDto);
-			model.addAttribute("students", userService.findAllStudentsByTeacherId(examDto.getTeacherDto().getUser().getId()));
+			model.addAttribute("students", userService.findAllStudentsByTeacherId(examDto.getTeacherDto().getId()));
 			model.addAttribute("exercises", exerciseService.findAllExercisesByTeacher(examDto.getTeacherDto().getId()));
 			return "formEditExam";
 		}

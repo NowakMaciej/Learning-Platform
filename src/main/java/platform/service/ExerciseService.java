@@ -30,26 +30,6 @@ public class ExerciseService {
 		this.userService = userService;
 		this.categoryService = categoryService;
 	}
-	
-//	public Exercise createExerciseFromDto(ExerciseDto exerciseDto) {
-//		Exercise exercise = new Exercise();
-//		if (exerciseDto.getId() != null) {
-//			exercise.setId(exerciseDto.getId());
-//		}
-//		exercise.setText(exerciseDto.getText());
-//		exercise.setAnswer(exerciseDto.getAnswer());
-//		exercise.setTeacher(teacherRepository.getOne(exerciseDto.getTeacherDto().getId()));
-//		exercise.setDifficultyLevel(exerciseDto.getDifficultyLevel());
-//		exercise.setCreated(LocalDateTime.now());
-//		exercise.setUpdated(exercise.getCreated());
-//		if (!exerciseDto.getCategoryDtos().isEmpty()) {
-//			exercise.setCategories(exerciseDto.getCategoryDtos()
-//					.stream()
-//					.map(categoryService::createSimpleCategoryFromDto)
-//					.collect(Collectors.toList()));
-//		}
-//		return exercise;
-//	}
 
 	public Exercise createSimpleExerciseFromDto(ExerciseDto exerciseDto) {
 		Exercise exercise = new Exercise();
@@ -87,7 +67,7 @@ public class ExerciseService {
 	
 	public ExerciseDto getDtoFromExercise(Exercise exercise) {
 		ExerciseDto exerciseDto = getSimpleDtoFromExercise(exercise);
-		exerciseDto.setTeacherDto(userService.getDtoFromTeacher(exercise.getTeacher()));
+		exerciseDto.setTeacherDto(userService.getSimpleDtoFromTeacher(exercise.getTeacher()));
 		if (!exercise.getCategories().isEmpty()) {
 			exerciseDto.setCategoryDtos(exercise.getCategories()
 					.stream()

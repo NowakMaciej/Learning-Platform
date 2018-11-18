@@ -67,7 +67,7 @@ public class CategoryService {
 	
 	public CategoryDto getDtoFromCategory(Category category) {
 		CategoryDto categoryDto = getSimpleDtoFromCategory(category);
-		categoryDto.setTeacherDto(userService.getDtoFromTeacher(category.getTeacher()));
+		categoryDto.setTeacherDto(userService.getSimpleDtoFromTeacher(category.getTeacher()));
 		if (Objects.nonNull(category.getExercises()) && !category.getExercises().isEmpty()) {
 			categoryDto.setExerciseDtos(category.getExercises()
 					.stream()

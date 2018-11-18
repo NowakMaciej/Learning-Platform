@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotBlank;
+import org.hibernate.validator.constraints.NotEmpty;
 
 import lombok.Data;
 import platform.utils.DifficultyLevel;
@@ -12,14 +13,18 @@ import platform.validator.UniqueEmail;
 @Data
 public class UserDto {
 	private Long id;
-	@NotBlank
+	@NotEmpty
+//	@NotBlank
 	private String firstname;
+	@NotEmpty
 	@NotBlank
 	private String surname;
+	@NotEmpty
 	@NotBlank
 	@Email
 	@UniqueEmail
 	private String email;
+	@NotEmpty
 	@NotBlank
 	private String password;
 	private String role;

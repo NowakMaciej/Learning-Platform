@@ -35,7 +35,7 @@ public class MessageController {
 			@ModelAttribute("user") UserDto user) {
 		if (isLoggedIn) {
 			messageService.saveMessage(messageDto, user);
-			return "redirect:/user/" + messageDto.getReceiver().getId();
+			return "redirect:/user/message/" + messageDto.getReceiver().getId();
 		}
 		return "redirect:/";
 	}

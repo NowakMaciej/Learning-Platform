@@ -49,12 +49,10 @@ public class MessageService {
 	public void saveMessage (MessageDto messageDto, UserDto userDto){
 		messageRepository.save(createMessageFromDto(messageDto, userDto));
 	}
-	
-//	public void markMessageAsRead (Long id){
+
 	public void markMessageAsRead (Long id, UserDto user){
 		Message message = messageRepository.findOne(id);
 		if (!message.getIsRead() && user.getId() == message.getReceiver().getId()) {
-//		if (!message.getIsRead()) {
 			message.setIsRead(true);
 			messageRepository.save(message);
 		}
@@ -80,5 +78,4 @@ public class MessageService {
 				.map(this::getDtoFromMessage)
 				.collect(Collectors.toList());
 	}
-	
 }

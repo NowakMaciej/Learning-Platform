@@ -13,6 +13,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
@@ -36,8 +37,12 @@ public class Student {
 	@ManyToOne
 	private Teacher teacher;
 //	@ManyToMany (mappedBy = "students", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+	
 	@ManyToMany (mappedBy = "students")
 	private List<Exam> exams = new ArrayList<>();
+	
+//	@OneToMany (mappedBy = "student", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+//	private List<StudentExam> exams = new ArrayList<>();
 }
 
 

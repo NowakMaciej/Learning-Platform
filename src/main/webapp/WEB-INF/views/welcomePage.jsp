@@ -19,14 +19,13 @@
 		<form:errors path="email" cssClass="error"/><br>
 		Password: <form:input type="password" path="password"/>
 		<form:errors path="password" cssClass="error"/><br>
-		
 		<input type="submit" value="Sign in"/>
 	</form:form>
 	<br><br><br>
 	<div>
 	New here?
 		<button>
-			<a href="${pageContext.request.contextPath}/user/register">Sign up</a>
+			<a href="${pageContext.request.contextPath}/user/registerStudent">Sign up</a>
 		</button>
 	</div>
 </body>

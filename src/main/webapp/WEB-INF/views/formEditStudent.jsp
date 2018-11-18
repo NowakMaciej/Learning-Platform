@@ -8,11 +8,14 @@
 <link type="text/css" href="${pageContext.request.contextPath}/resources/css/style.css" rel="stylesheet">
 </head>
 <body>
+	<p class="prime">Edit student</p>
 	<button>
 		<a href="${pageContext.request.contextPath}/user/${ user.role }/">Abort</a>
 	</button>
 	<form:form method="post" modelAttribute="studentDto" action="${pageContext.request.contextPath}/user/edit/student">
 		<form:hidden path="user.id" value="${ student.user.id }"/>
+		<form:hidden path="id" value="${ student.id }"/>
+		<form:hidden path="user.role" value="${ student.user.role }"/>
 		Firstname:<form:input path="user.firstname"/>
 		<form:errors path="user.firstname" cssClass="error"/><br>
 		Surname:<form:input path="user.surname"/>
@@ -21,8 +24,6 @@
 		<form:errors path="user.email" cssClass="error"/><br>
 		Password:<form:input path="user.password"/>
 		<form:errors path="user.password" cssClass="error"/><br>
-		<form:hidden path="user.role" value="${ student.user.role }"/>
-		<form:hidden path="id" value="${ student.id }"/>
 		Teacher:<br>
 		<form:select path="teacher.id" items="${teachers}" itemValue="id" itemLabel="name"/><br>
 		Difficulty level:
