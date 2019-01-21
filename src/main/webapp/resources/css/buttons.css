@@ -1,0 +1,205 @@
+.mainContainer .signInButton {
+  	margin-top: 10px;
+	padding-top: 6px;
+	padding-bottom: 6px;
+  	width: 56%;
+  	border-radius: 12px;
+	background-color: silver;
+	border: 2px solid indigo;
+  	font: 18px arial, sans-serif;
+	margin-left: 179px;
+}
+
+.container .signInButton {
+  	margin-top: 10px;
+	padding-top: 6px;
+	padding-bottom: 6px;
+  	width: 56%;
+  	border-radius: 12px;
+	background-color: silver;
+	border: 2px solid indigo;
+  	font: 18px arial, sans-serif;
+	margin-left: 36%;
+}
+
+.signInButton:hover {
+	cursor: pointer;
+	transition-duration: 0.2s;
+  	background-color: lavender;
+ 	border: 2px solid darkOrange;
+}
+
+.signUpButton {
+  	text-decoration: none;
+  	color: black;
+  	height: 30px;
+	padding-top: 6px;
+	padding-bottom: 6px;
+  	padding-left: 20px;
+  	padding-right: 20px;
+  	border-radius: 12px;
+	background-color: silver;
+  	border: 2px solid indigo;
+	font: 18px arial, sans-serif;
+}
+
+input.submitButton {
+	text-align:center;
+	text-decoration: none;
+  	color: black;
+	padding-top: 6px;
+	padding-bottom: 6px;
+  	padding-left: 20px;
+  	padding-right: 20px;
+  	border-radius: 12px;
+	background-color: silver;
+  	border: 2px solid indigo;
+	font: 18px arial, sans-serif;
+	width: 150px;
+	margin-left: 244px;
+	margin-top: 10px;
+}
+
+input.submitButton:hover {
+	cursor: pointer;
+	transition-duration: 0.2s;
+  	background-color: lavender;
+ 	border: 2px solid darkOrange;
+}
+
+input.addButton, input.assignButton {
+	margin-left: 50px;	
+}
+
+input.assignButton, .okButton {
+	margin-left: 0px;	
+}
+
+a.abortButton {
+	text-align:center;
+	text-decoration: none;
+  	color: black;
+	padding-top: 6px;
+	padding-bottom: 6px;
+  	border-radius: 12px;
+  	padding-left: 20px;
+  	padding-right: 20px;
+	background-color: silver;
+  	border: 2px solid indigo;
+	font: 18px arial, sans-serif;
+	margin-top: 10px;
+	margin-left: 15px;
+	display: inline-block;
+	width: 65px;
+}
+
+a.abortButton:hover {
+	cursor: pointer;
+	transition-duration: 0.2s;
+  	background-color: lavender;
+ 	border: 2px solid darkOrange;
+}
+
+a.returnButton{
+	margin-left: 200px;
+}
+
+.signUpButton:hover {
+	transition-duration: 0.2s;
+  	background-color: lavender;
+ 	border: 2px solid darkOrange;
+}
+
+.menuButton {
+	background-color: darkOrange;
+  	border: 3px solid darkOrange;
+  	padding: 10px;
+  	text-align: center;
+  	text-decoration: none;
+  	display: inline-block;
+  	font-size: 16px;
+  	border-radius: 12px;
+  	margin: 0px 10px;
+  	height: 40px;
+  	width: 140px;
+}
+
+.menuButton:hover {
+	transition-duration: 0.2s;
+  	background-color: lavender;
+ 	border: 3px solid darkOrange;
+ 	margin: 0px 10px;
+}
+
+.functionalButton {
+	background-color: silver;
+  	border: 3px solid fireBrick;
+  	text-align: center;
+  	text-decoration: none;
+  	display: inline-block;
+  	font-size: 16px;
+  	border-radius: 12px;
+  	margin: 20px 50px;
+  	height: 60px;
+  	width: 200px;
+}
+
+.functionalButton:hover {
+	transition-duration: 0.2s;
+  	background-color: lavender;
+ 	border: 3px solid darkOrange;
+}
+
+.actionButton {
+	background-color: silver;
+  	border: 2px solid fireBrick;
+  	text-align: center;
+  	text-decoration: none;
+  	display: inline-block;
+  	font-size: 16px;
+  	border-radius: 12px;
+  	height: 30px;
+ 	margin-top: 2px;
+ 	margin-bottom: 2px;
+}
+
+.actionButton:hover {
+	transition-duration: 0.2s;
+  	background-color: lavender;
+ 	border: 2px solid darkOrange;
+}
+
+.actionButton:hover {
+	transition-duration: 0.2s;
+  	background-color: lavender;
+ 	border: 2px solid darkOrange;
+}
+
+.actionButtonTakeViewExam {
+	background-color: silver;
+  	border: 2px solid fireBrick;
+  	text-align: center;
+  	text-decoration: none;
+  	font-size: 16px;
+  	border-radius: 12px;
+  	height: 30px;
+ 	margin-top: 2px;
+ 	margin-bottom: 2px;
+}
+
+.editButton, .okButton {
+	width: 60px;
+}
+
+.deleteButton {
+	width: 80px;
+}
+
+.activateButton {
+	width: 180px;
+}
+
+.messageButton, .assignButton, .createButton {
+	width: 120px;
+}
+

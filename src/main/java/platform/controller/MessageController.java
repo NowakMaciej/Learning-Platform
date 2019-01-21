@@ -48,7 +48,7 @@ public class MessageController {
 		if (isLoggedIn) {
 			messageService.markMessageAsRead(id, user);
 			model.addAttribute("message", messageService.findMessage(id));
-			return "showMessage";
+			return "general/showMessage";
 		}
 		return "redirect:/";
 	}

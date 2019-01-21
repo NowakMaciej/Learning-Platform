@@ -57,7 +57,7 @@ public class ExerciseController {
 			model.addAttribute("exerciseDto", new ExerciseDto());
 			model.addAttribute("categories", categoryService.findAllCategoriesByTeacher(teacher.getId()));
 			model.addAttribute("lastExercises", exerciseService.findLast5ExercisesByTeacher(teacher.getId()));
-			return "pageExercises";
+			return "teacher/allExercises";
 		}
 		return "redirect:/";
 	}
@@ -81,7 +81,7 @@ public class ExerciseController {
 			ExerciseDto exerciseDto = exerciseService.findExerciseById(id);
 			model.addAttribute("exerciseDto", exerciseDto);
 			model.addAttribute("categories", categoryService.findAllCategoriesByTeacher(exerciseDto.getTeacherDto().getId()));
-			return "formEditExercise";
+			return "teacher/editExercise";
 		}
 		return "redirect:/";
 	}
@@ -90,7 +90,7 @@ public class ExerciseController {
 	public String updateExercise(@Valid @ModelAttribute(name = "exercise") ExerciseDto exercise, BindingResult result,
 			@ModelAttribute("isLoggedIn") Boolean isLoggedIn, Model model) {
 		if(result.hasErrors()){
-			return "formEditExercise";
+			return "teacher/editExercise";
 		}
 		exerciseService.updateExercise(exercise);
 		return "redirect:/exercise/";

@@ -50,6 +50,7 @@ public class ExerciseService {
 					.stream()
 					.map(categoryService::createSimpleCategoryFromDto)
 					.collect(Collectors.toList()));
+//					.collect(Collectors.toSet()));
 		}
 		return exercise;
 	}
@@ -73,6 +74,7 @@ public class ExerciseService {
 					.stream()
 					.map(categoryService::getSimpleDtoFromCategory)
 					.collect(Collectors.toList()));
+//					.collect(Collectors.toSet()));
 		}
 		return exerciseDto;
 	}
@@ -88,6 +90,7 @@ public class ExerciseService {
 					.stream()
 					.map(categoryService::createCategoryFromDto)
 					.collect(Collectors.toList()));
+//					.collect(Collectors.toSet()));
 		}
 		exerciseRepository.save(exercise);
 	}

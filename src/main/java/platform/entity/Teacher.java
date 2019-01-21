@@ -1,7 +1,9 @@
 package platform.entity;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -31,6 +33,7 @@ public class Teacher {
 	@OneToMany(mappedBy = "teacher")
 	private List<Student> students = new ArrayList<>();
 	@OneToMany (mappedBy = "teacher")
+//	private Set<Category> categories = new HashSet<>();
 	private List<Category> categories = new ArrayList<>();
 	@OneToMany (mappedBy = "teacher")
 	private List<Exam> exams = new ArrayList<>();

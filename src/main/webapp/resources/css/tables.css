@@ -1,0 +1,22 @@
+table {
+	border-collapse: collapse;
+}
+
+th {
+	border: none;
+	padding: 10px 15px;
+	max-width: 500px;
+	background-color: darkOrange;
+	font: bold 20px arial, sans-serif;
+	text-align: center;
+}
+
+td {
+	border: none;
+	padding: 10px 15px;
+	max-width: 500px;
+	background-color: silver;
+	font: 16px arial, sans-serif;
+	text-align: center;
+}
+

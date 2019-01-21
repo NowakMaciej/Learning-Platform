@@ -33,10 +33,6 @@ public class Exam {
 	private Teacher teacher;
 //	@ManyToMany(cascade = { CascadeType.MERGE, CascadeType.PERSIST })
 //	@ManyToMany(cascade = CascadeType.MERGE)
-	
-	@ManyToMany
-	private List<Student> students = new ArrayList<>();
-	
 	@Enumerated(EnumType.STRING)
 	private DifficultyLevel difficultyLevel;
 	private LocalDateTime created;
@@ -47,7 +43,14 @@ public class Exam {
 	@ManyToMany
 	private List<Exercise> exercises = new ArrayList<>();
 	
+//	@ManyToMany
+//	private List<Student> students = new ArrayList<>();
+	
+//	WITH COMPOUND KEY
 //	@OneToMany (mappedBy = "exam", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
 //	private List<StudentExam> students = new ArrayList<>();
+
+	@OneToMany (mappedBy = "exam", cascade = CascadeType.REMOVE)
+	private List<StudentExam> studentExams = new ArrayList<>();
 }
 

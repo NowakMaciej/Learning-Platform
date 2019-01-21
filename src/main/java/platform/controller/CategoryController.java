@@ -40,7 +40,7 @@ public class CategoryController {
 		if(isLoggedIn) {
 			model.addAttribute("categoryDto", new CategoryDto());
 			model.addAttribute("categories", categoryService.findAllCategoriesByTeacher(teacher.getId()));
-			return "pageCategories";
+			return "teacher/allCategories";
 		}
 		return "redirect:/";
 	}
@@ -61,7 +61,7 @@ public class CategoryController {
 		@ModelAttribute("isLoggedIn") Boolean isLoggedIn, @PathVariable Long id, Model model) {
 		if (isLoggedIn) {
 			model.addAttribute("categoryDto", categoryService.findCategoryById(id));
-			return "formEditCategory";
+			return "teacher/editCategory";
 		}
 		return "redirect:/";
 	}
@@ -70,7 +70,7 @@ public class CategoryController {
 	public String updateTeacher(@Valid @ModelAttribute(name = "category") CategoryDto category, BindingResult result,
 			@ModelAttribute("isLoggedIn") Boolean isLoggedIn, Model model) {
 		if(result.hasErrors()){
-			return "formEditCategory";
+			return "teacher/editCategory";
 		}
 		categoryService.updateCategory(category);
 		return "redirect:/category/";

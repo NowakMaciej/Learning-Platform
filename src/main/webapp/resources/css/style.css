@@ -1,30 +1,210 @@
-table {
-	border-collapse: collapse;
+body {
+	background-image: url("https://wallpaperplay.com/walls/full/d/2/d/38938.jpg");
+  	height: 100%;
+	font-family: 'Helvetica', 'Arial', sans-serif;
+	font-size: 20px;
+	box-sizing: border-box;
 }
 
-th, td {
-	border: 1px solid black;
-	padding: 10px 15px;
-	max-width: 500px;
+h1, h2 {
+	text-align: center;
+	font-family: 'Helvetica', 'Arial', sans-serif;
+	font-size: 28px;
+	color: darkOrange;
+	font-weight: bold;
+}
+
+h2 {
+	font-size: 24px;
+}
+
+.mainContainer {
+	background-color: grey;
+	padding-top: 20px;
+	padding-bottom: 20px;
+	margin: 0 auto;
+	margin-top: 20px;
+	width: 500px;
+}
+
+.mainContainer span {
+	color: darkOrange;
+	margin-top: 10px;
+	padding-top: 6px;
+	padding-bottom: 6px;
+	padding-left: 10%;
+	display: inline-block;
+	width: 25%;
+  	font: bold 20px arial, sans-serif;
+}
+
+.mainContainer input {
+	padding-top: 6px;
+	padding-bottom: 6px;
+	display: inline-block;
+	width: 55%;
+  	font: 18px arial, sans-serif;
+  	background-color: silver;
+	border: 1px solid silver;
+}
+
+textarea{
+	padding-top: 6px;
+	padding-bottom: 6px;
+	display: inline-block;
+	width: 400px;
+	height: calc(3em + 12px);
+  	font: 18px arial, sans-serif;
+  	background-color: silver;
+	border: 1px solid silver;
+}
+
+.leftMargin {
+	margin-left: 150px;
+}
+
+.leftMargin200 {
+	margin-left: 200px;
+}
+
+.topMargin {
+	margin-top: 150px;
+}
+
+.container {
+	background-color: grey;
+	padding-top: 20px;
+	padding-bottom: 20px;
+	margin: 0 auto;
+	margin-top: 20px;
+	width: 900px;
+}
+
+.formSpan {
+	color: darkOrange;
+	margin-bottom: 10px;
+	padding-top: 6px;
+	padding-bottom: 6px;
+	padding-left: 50px;
+	display: inline-block;
+	width: 190px;
+  	font: bold 20px arial, sans-serif;
+}
+
+input {
+	padding-top: 6px;
+	padding-bottom: 6px;
+	display: inline-block;
+	width: 275px;
+  	font: 18px arial, sans-serif;
+  	background-color: silver;
+	border: 1px solid silver;
+}
+
+.container errors {
+	color: black;
+	padding-left: 20px;
+	padding-right: 20px;
+	padding-top: 6px;
+	padding-bottom: 6px;
+	display: inline-block;
+  	font: 14px arial, sans-serif;
+  	background-color: silver;
+	border: 1px solid silver;
+	display: inline-block;
+}
+
+.failure {
+	margin: auto;
+	text-align: center;
+	padding-left: 20px;
+	padding-right: 20px;
+	padding-top: 5px;
+	padding-bottom: 6px;
+	background-color: red;
+	color: white;
+	width: 460px;
+	font: bold 20px arial, sans-serif;
 }
 
 .error {
-	color: red;
-	font-weight: bold;
-	border: 1px solid red;
+	display: inline-block;
+	text-align: center;
+	padding-left: 20px;
+	padding-right: 20px;
+	padding-top: 6px;
+	padding-bottom: 6px;
+	color: white;
+	height: 21px;
+	font: bold 20px arial, sans-serif;
+	border: 2px solid red;
 }
 
-div {
-	font-weight: bold;
+.formSelect {
+	padding-top: 6px;
+	padding-bottom: 6px;
+	display: inline-block;
+	width: 275px;
+  	font: 18px arial, sans-serif;
+  	background-color: silver;
+	border: 1px solid silver;
+	text-align-last:center;
 }
 
-.prime {
-	font-weight: bold;
-	font-size: 20px;
+.primeText {
+	color: darkOrange;
+	font: bold 24px arial, sans-serif;
+	padding-left: 200px;
 }
 
 .login {
 	font-weight: bold;
+}
+
+#main {
+	width: 100%;
+	height: 60px;
+}
+
+#loggedUser, #menu {
+	padding-top: 10px;
+	display: inline;
+}
+
+#loggedUser {
+	float: left;
+	padding-left: 30px;
+	font-family: 'Helvetica', 'Arial', sans-serif;
+	font-size: 20px;
+	color: darkOrange;
+	font-weight: bold;
+}
+
+#menu {
+	float: right;
+	padding-right: 30px;
+}
+
+.mainFunctions {
+	height: 100px;
+	background-image: url("https://wallpaperplay.com/walls/full/e/d/4/38914.jpg");
+}
+
+.functionalButtons {
+  	padding-left: 150px;
+}
+
+.center{
+	text-align: center;
+	margin: auto;
+}
+
+.table{
+	margin: 0px 200px;
+}
+
+.tableNewExam{
+	margin: 0px 100px 0px 244px;
 }
 
 .read {
@@ -33,7 +213,6 @@ div {
 
 .readNot {
 	font-weight: bold;
-	background-color: grey;
 }
 
 .hide {
@@ -41,5 +220,15 @@ div {
 }
 
 .show {
-	display: block;
+	display: inline-block;
+}
+
+a:link {
+  text-decoration: none;
+  color: inherit;
+}
+
+::placeholder {
+	color: grey;
+	font: 16px arial, sans-serif;
 }

@@ -2,7 +2,9 @@ package platform.entity;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -31,6 +33,7 @@ public class Exercise {
 	private String difficultyLevel;
 //	@ManyToMany(cascade = CascadeType.MERGE)
 	@ManyToMany
+//	private Set<Category> categories = new HashSet<>();
 	private List<Category> categories = new ArrayList<>();
 	@ManyToMany(mappedBy = "exercises")
 	private List<Exam> exams = new ArrayList<>();

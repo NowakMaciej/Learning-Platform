@@ -75,7 +75,7 @@ public class UserServiceImpl {
 		user.setPassword(BCrypt.hashpw(userDto.getPassword(), BCrypt.gensalt()));
 		user.setEmail(userDto.getEmail());
 		if (Objects.isNull(userDto.getActive())) {
-			user.setActive(false);
+			user.setActive(true);
 		}
 		if (Objects.nonNull(userDto.getRole())) {
 			user.setRole(userDto.getRole());
@@ -88,7 +88,15 @@ public class UserServiceImpl {
 		teacher.setUser(createUserFromDto(userDto));
 		return teacher;
 	}
+	
+	// cos jest nie tak z tym simplestudent - dlaczego tworzymy nowego? 
+	public Student createSimpleStudentFromDto(StudentDto studentDto) {
+		Student student = new Student();
+		student.setId(studentDto.getId());
+		return student;
+	}
 
+	// cos jest nie tak z tym student - dlaczego nie przywolujemy createSimpleStudent?
 	public Student createStudentFromDto(UserDto userDto) {
 		Student student = new Student();
 		student.setUser(createUserFromDto(userDto));
@@ -98,12 +106,6 @@ public class UserServiceImpl {
 		if (Objects.nonNull(userDto.getTeacher())) {
 			student.setTeacher(teacherRepository.findOne(userDto.getTeacher().getId()));
 		}
-		return student;
-	}
-	
-	public Student createSimpleStudentFromDto(StudentDto studentDto) {
-		Student student = new Student();
-		student.setId(studentDto.getId());
 		return student;
 	}
 
@@ -230,8 +232,8 @@ public class UserServiceImpl {
 				.collect(Collectors.toList());
 	}
 	
-	public List<StudentDto> findAllStudentsByTeacherId(Long id) {
-		return studentRepository.findAllStudentsByTeacherId(id)
+	public List<StudentDto> findAllActiveStudentsByTeacherId(Long id) {
+		return studentRepository.findAllActiveStudentsByTeacherId(id)
 				.stream()
 				.map(this::getDtoFromStudent)
 				.collect(Collectors.toList());

@@ -38,11 +38,15 @@ public class Student {
 	private Teacher teacher;
 //	@ManyToMany (mappedBy = "students", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
 	
-	@ManyToMany (mappedBy = "students")
-	private List<Exam> exams = new ArrayList<>();
-	
+//	@ManyToMany (mappedBy = "students")
+//	private List<Exam> exams = new ArrayList<>();
+
+//	WITH COMPOUND KEY	
 //	@OneToMany (mappedBy = "student", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
 //	private List<StudentExam> exams = new ArrayList<>();
+
+	@OneToMany (mappedBy = "student")
+	private List<StudentExam> studentExams = new ArrayList<>();
 }
 
 

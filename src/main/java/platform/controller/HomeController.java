@@ -43,7 +43,7 @@ public class HomeController {
 			return "redirect:/user";
 		}
 		model.addAttribute("user", new UserDto());
-		return "welcomePage";
+		return "general/welcomePage";
 	}
 	
 

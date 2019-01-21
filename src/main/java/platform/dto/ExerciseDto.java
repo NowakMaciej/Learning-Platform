@@ -2,6 +2,7 @@ package platform.dto;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Set;
 
 import lombok.Data;
 import platform.entity.Teacher;
@@ -15,6 +16,9 @@ public class ExerciseDto {
 	private LocalDateTime created;
 	private LocalDateTime updated;
 	private String difficultyLevel;
+	
+//	private Set<CategoryDto> categoryDtos;
 	private List<CategoryDto> categoryDtos;
+	
 	private List<ExamDto> examDtos;
 }

@@ -9,7 +9,7 @@ import javax.validation.Constraint;
 import javax.validation.Payload;
 
 @Constraint(validatedBy = UniqueEmailValidator.class)
-@Target({ElementType.METHOD, ElementType.FIELD})
+//@Target({ElementType.METHOD, ElementType.FIELD, ElementType.})
 @Retention(RetentionPolicy.RUNTIME)
 public @interface UniqueEmail {
 	String message() default "Email already exists in database";

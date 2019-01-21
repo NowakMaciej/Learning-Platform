@@ -7,6 +7,7 @@ import java.util.stream.Collectors;
 
 import javax.transaction.Transactional;
 
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 
 import platform.dto.ExamDto;
@@ -26,51 +27,66 @@ public class ExamService {
 	private ExerciseService exerciseService;
 	private TeacherRepository teacherRepository;
 	private UserServiceImpl userService;
+	private StudentExamService studentExamService;
 
 	public ExamService(ExamRepository examRepository, ExerciseService exerciseService, TeacherRepository teacherRepository,
-			UserServiceImpl userService) {
+			UserServiceImpl userService, @Lazy StudentExamService studentExamService) {
 		this.examRepository = examRepository;	
 		this.exerciseService = exerciseService;
 		this.teacherRepository = teacherRepository;
 		this.userService = userService;
+		this.studentExamService = studentExamService;
 	}
 	
-//	public StudentExam createStudentExamFromDto (ExamDto examDto) {
-//		StudentExam studentExam = new StudentExam();
-//		if (!examDto.getStudentExamDtos().isEmpty()) {
-//			studentExam.setStudent(examDto.getStudentExamDtos());
-//		return studentExam;
-//	}
-//	
-//	public StudentExamDto getDtoFromStudentExam (Exam exam) {
-//		StudentExamDto studentExamDto = new StudentExamDto();
-//		return studentExamDto;
-//	}
-	
-	public Exam createExamFromDto(ExamDto examDto) {
+	public Exam createSimpleExamFromDto(ExamDto examDto) {
 		Exam exam = new Exam();
-		if (examDto.getId() != null) {
-			exam.setId(examDto.getId());
-		}
+		exam.setId(examDto.getId());
 		exam.setTitle(examDto.getTitle());
-		exam.setTeacher(teacherRepository.getOne(examDto.getTeacherDto().getId()));
-		if (!examDto.getStudentDtos().isEmpty()) {
-			exam.setStudents(examDto.getStudentDtos().stream()
-					.map(userService::createSimpleStudentFromDto).collect(Collectors.toList()));
-		}		
-//		if (!examDto.getStudentExamDtos().isEmpty()) {
-//			exam.setStudents(examDto.getStudentExamDtos().stream().map(this::createStudentExamFromDto).collect(Collectors.toList()));
-//		}
 		exam.setDifficultyLevel(examDto.getDifficultyLevel());
 		exam.setCreated(LocalDateTime.now());
 		exam.setUpdated(exam.getCreated());
-		exam.setActive(true);
+		exam.setActive(false);
+		return exam;
+	}
+	
+	public Exam createExamFromDto(ExamDto examDto) {
+		Exam exam = createSimpleExamFromDto(examDto);
+		exam.setTeacher(teacherRepository.getOne(examDto.getTeacherDto().getId())); // dziala dopoki teacher i simpleTeacher to to samo
 		if (!examDto.getExerciseDtos().isEmpty()) {
 			exam.setExercises(examDto.getExerciseDtos().stream()
 					.map(exerciseService::createSimpleExerciseFromDto).collect(Collectors.toList()));
-		}		
+		}
 		return exam;
 	}
+	
+//	public Exam createExamFromDto(ExamDto examDto) {
+//		Exam exam = new Exam();
+//		if (examDto.getId() != null) {
+//			exam.setId(examDto.getId());
+//		}
+//		exam.setTitle(examDto.getTitle());
+//		exam.setTeacher(teacherRepository.getOne(examDto.getTeacherDto().getId()));
+////	if (!examDto.getStudentDtos().isEmpty()) {
+////		exam.setStudents(examDto.getStudentDtos().stream()
+////				.map(userService::createSimpleStudentFromDto)
+////				.collect(Collectors.toList()));
+////	}		
+////	if (!examDto.getStudentExamDtos().isEmpty()) {
+////		exam.setStudents(examDto.getStudentExamDtos().stream()
+////				.map(this::createStudentExamFromDto)
+////				.collect(Collectors.toList()));
+////	}
+//		exam.setDifficultyLevel(examDto.getDifficultyLevel());
+//		exam.setCreated(LocalDateTime.now());
+//		exam.setUpdated(exam.getCreated());
+//		exam.setActive(true);
+//		if (!examDto.getExerciseDtos().isEmpty()) {
+//			exam.setExercises(examDto.getExerciseDtos().stream()
+//					.map(exerciseService::createSimpleExerciseFromDto)
+//					.collect(Collectors.toList()));
+//		}		
+//		return exam;
+//	}
 	
 	public ExamDto getSimpleDtoFromExam(Exam exam) {
 		ExamDto examDto = new ExamDto();
@@ -79,16 +95,27 @@ public class ExamService {
 		examDto.setDifficultyLevel(exam.getDifficultyLevel());
 		examDto.setCreated(exam.getCreated());
 		examDto.setUpdated(exam.getUpdated());
+		examDto.setActive(exam.getActive());
+		if(Objects.nonNull(exam.getTeacher())) {
+			examDto.setTeacherDto(userService.getSimpleDtoFromTeacher(exam.getTeacher()));
+		}
+		
+		if (!exam.getExercises().isEmpty()) {
+			examDto.setExerciseDtos(exam.getExercises()
+					.stream()
+					.map(exerciseService::getDtoFromExercise)
+					.collect(Collectors.toList()));
+		}
 		return examDto;
 	}
 
 	public ExamDto getDtoFromExam(Exam exam) {
 		ExamDto examDto = getSimpleDtoFromExam(exam);
 		examDto.setTeacherDto(userService.getSimpleDtoFromTeacher(exam.getTeacher()));
-		if (!exam.getStudents().isEmpty()) {
-			examDto.setStudentDtos(exam.getStudents()
+		if (!exam.getStudentExams().isEmpty()) {
+			examDto.setStudentExamDtos(exam.getStudentExams()
 					.stream()
-					.map(userService::getSimpleDtoFromStudent)
+					.map(studentExamService::getDtoFromStudentExam)
 					.collect(Collectors.toList()));
 		}
 		if (!exam.getExercises().isEmpty()) {
@@ -103,11 +130,11 @@ public class ExamService {
 	public void updateExam(ExamDto examDto) {
 		Exam exam = examRepository.getOne(examDto.getId());
 		exam.setTitle(examDto.getTitle());
-		if (Objects.nonNull(examDto.getStudentDtos()) && !examDto.getStudentDtos().isEmpty()) {
-			exam.setStudents(examDto.getStudentDtos().stream()
-					.map(userService::createSimpleStudentFromDto)
-					.collect(Collectors.toList()));
-		}		
+//		if (Objects.nonNull(examDto.getStudentDtos()) && !examDto.getStudentDtos().isEmpty()) {
+//			exam.setStudents(examDto.getStudentDtos().stream()
+//					.map(userService::createSimpleStudentFromDto)
+//					.collect(Collectors.toList()));
+//		}		
 		exam.setDifficultyLevel(examDto.getDifficultyLevel());
 		exam.setUpdated(LocalDateTime.now());
 		if (!examDto.getExerciseDtos().isEmpty()) {
@@ -146,18 +173,19 @@ public class ExamService {
 			.collect(Collectors.toList());
 	}
 	
-	public List<ExamDto> findAllExamsByStudentId(Long id) {
-		return examRepository.findAllExamsByStudentId(id)
-			.stream()
-			.map(this::getDtoFromExam)
-			.collect(Collectors.toList());
-	}
+//	public List<ExamDto> findAllExamsByStudentId(Long id) {
+//		return examRepository.findAllExamsByStudentId(id)
+//			.stream()
+//			.map(this::getDtoFromExam)
+//			.collect(Collectors.toList());
+//	}
 
 	public void deleteExam(Long id) {
 		examRepository.delete(id);
 	}
 	
-	public String evaluateExam (ExamDto examDto) {
+//	public String evaluateExam (Long studentId, ExamDto examDto) {
+	public Integer evaluateExam (Long studentId, ExamDto examDto) {
 		Exam exam = examRepository.getOne(examDto.getId());
 		List<Exercise> exercises = exam.getExercises();
 		List<ExerciseDto> exerciseDtos = examDto.getExerciseDtos();
@@ -167,6 +195,9 @@ public class ExamService {
 				result = result +1;
 			}
 		}
-		return result + "/" + exercises.size();
+		studentExamService.saveExamResult(studentId, examDto.getId(), result);
+//		return result + "/" + exercises.size();
+		return result;
 	}
+	
 }
